@@ -1,0 +1,122 @@
+body	{
+	background-color:#000;
+	margin:10px;
+	padding: 30px;
+	color:#000;
+	background-image:url('img/summitlogo558.png');
+	background-repeat:no-repeat;
+	background-position:left top;
+}
+
+#header {
+	/*background-color: #0a0a0a;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border: 1px solid #0a0a0a; */
+	width:700px;
+	margin: 5% 5% 5% 5%; 
+	padding: 10px;
+	font-size: 78px;
+	text-align: center;
+	display: inline;
+	margin: 0px 30%;
+	font-family: 'Shortcut';
+	src: url('/fonts/short.ttf');
+	text-padding: 3px;
+	color: #FFF;
+	text-shadow: 1px 1px #AA3833; 
+
+}
+
+#logo {
+	width: 300px;
+	height: auto;
+}
+
+#content {
+	/* margin: 20px;
+	padding: 20px 5px 0px;
+	background-color: #2685bb;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border: 1px solid #000;
+	width: 90%;*/
+	color: #FFF;
+	text-align: center;
+}
+
+#dialer {
+	/*display: inline;*/
+	float: right;
+	padding: 150px 20px 0px 0px;
+	width: 300px;
+}
+
+#map {
+	/*display: block;*/
+	float: left;
+	padding: 80px 0px 0px 0px;
+}
+
+#hidden {
+	visibility: hidden;
+}
+
+#phone {
+	display: inline;
+}
+
+.clear { 
+    overflow: hidden;
+    width: 100%;
+}
+
+#button {
+background: transparent url('img/buttona.gif') no-repeat scroll top right;
+    color: #444;
+    display: block;
+    float: left;
+    font: normal 12px arial, sans-serif;
+    height: 24px;
+    margin-right: 6px;
+    padding-right: 18px; 
+    text-decoration: none;
+}
+
+#buttonspan {
+    background: transparent url('img/buttonspan.gif') no-repeat;
+    display: block;
+    line-height: 14px;
+    padding: 5px 0 5px 18px;
+}
+/*
+	div#content{
+		padding:100px 0 0 150px;
+	}
+	@media screen{
+		body>div#header{
+			position:fixed;
+		}
+		body>div#left-sidebar{
+			position:fixed;
+		}
+	}
+*/
+	* html body{
+		overflow:hidden;
+	}
+	* html div#content{
+		height:100%;
+		overflow:auto;
+	}
+	.error {
+		font: normal 10px arial;
+		padding: 3px;
+		margin: 3px;
+		background-color: #ffc;
+		border: 1px solid #c00;
+	}
+
+textarea {
+     resize: vertical;
+}

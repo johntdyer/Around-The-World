@@ -1,0 +1,232 @@
+/*
+	* Stylesheet for the Flash Gordon Phone and IM client
+	* Author: Dave Hoff
+	* Created: June 14, 2010
+*/
+
+@CHARSET "UTF-8";
+/*
+body{
+	background:#FFF;
+	font-family: Helvetica Narrow, sans-serif;
+	font-size:1em;
+}
+*/
+.clearfix{
+	clear:left;	
+}
+a:active, a, :focus{
+  outline: none;
+  -moz-outline-style: none;
+}
+#phono{
+	position:relative;
+	width:250px;
+}
+
+/* PHONE CLIENT STYLES */
+#phone{
+	background: #004A7D url("../images/phone-background-blu.png") repeat-x top left;
+	border:1px solid #0C0D3B;
+	padding-bottom:5px;
+	border-top:none;
+}
+#phono-header{
+	color:#FFF;
+	clear:left;
+}
+#phono-header .toggler{
+	display:block;
+	color:#D7E8F2;	
+	text-shadow:1px 1px 1px #000;
+	font-size:.8em;
+	height:25px;
+	line-height:25px;
+	text-align:center;
+	text-decoration:none;
+	border-bottom:1px solid #0C0D3B;
+	background:url("../images/tab-bg.png") repeat-x bottom left;
+}
+#phono-header a.phoneTgl{
+	float:left;	
+	width:124px;
+}
+#phono-header a.chatTgl{
+	float:right;
+	width:124px;
+	border-left:none;
+}
+#phono-header a.selected{
+	background:url("../images/tab-select-bg.png") repeat-x top left;
+	border:1px solid #0C0D3B;
+	border-bottom:none;
+	color:#000;
+	font-weight:bold;
+	text-shadow:1px 1px 1px #FFF;
+}
+
+#screen{
+    height:63px;
+	background:url("../images/phone-screen-blu.png");
+    max-height : 400px;
+    height : 90%;
+    max-width : 630px;
+    width : 105%;
+	line-height:53px;
+	color:#003366;
+	text-align:center;
+
+	font-size:3em;
+	
+}
+#phone-screen{
+	height:53px;
+	background:url("../images/phone-screen-blu.png") repeat-x top left;
+	line-height:53px;
+	color:#003366;
+	text-align:center;
+
+	text-shadow:1px 1px 1px #FFF;
+}
+.digit-hldr{
+	margin:0 auto;
+	margin-top:5px;
+	width:245px;
+}
+.digit{
+	width:75px;
+	height:38px;
+	float:left;
+	margin:2px 2px;
+	padding-top:7px;
+	background:#001042 url("../images/phone-digit-up-blu.png") repeat-x top left;
+	color:#FFF;
+	text-align:center;
+	text-decoration:none;
+	border:1px solid #004578;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	-moz-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.4);
+	-webkit-box-shadow:1px 1px 1px rgba(0, 0, 0, 0.4);
+	text-shadow:1px 1px 1px #000235;
+}
+a.digit:hover{
+	background-position:0 -20px;
+	-moz-box-shadow:none;
+	-webkit-box-shadow:none;
+}
+a.digit:active{
+	border:1px solid #007EDA;
+	-moz-box-shadow:none;
+	-webkit-box-shadow:none;
+}
+a.digit span.number{
+	font-size:120%;	
+	font-weight:bold;
+}
+a.digit span.star{
+	font-size:180%;	
+	font-weight:bold;
+}
+a.digit span.abc{
+	font-size:65%;
+}
+.control-hldr{
+	margin:0 auto;
+	margin-top:3px;
+	width:245px;
+}
+.control-hldr a.control-btn{
+	width:75px;
+	height:38px;
+	float:left;
+	margin:2px 2px;
+	padding-top:7px;
+	color:#FFF;
+	text-align:center;
+	line-height:35px;
+	text-decoration:none;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	-moz-box-shadow:0px 1px 1px rgba(0, 0, 0, 0.9);
+	-webkit-box-shadow:0px 1px 1px rgba(0, 0, 0, 0.9);
+	font-size:100%;	
+	font-weight:bold;
+}
+.control-hldr a.logo-icon{
+	width:75px;
+	height:38px;
+	float:left;
+	margin:2px 2px;
+	padding-top:7px;
+	background:url("../images/voxeo-icon.png") no-repeat center center;
+}
+.control-hldr a.control-btn:hover{
+	background-position:0 -20px;
+}
+.control-hldr a.call:active{
+	border:1px solid #105217;
+}
+.control-hldr a.talk:active{
+	border:1px solid #1F59AB;
+}
+.control-hldr a.endCall:active{
+	border:1px solid #1F59AB;
+}
+.control-hldr .call{
+	background:#26A91D url("../images/phone-call-up-blu.png") repeat-x top left;
+	border:1px solid #95CC91;
+}
+.control-hldr .call span{
+	background:url("../images/call-icon.png") no-repeat top left;
+	padding-left:20px;
+}
+.control-hldr .endCall{
+	background:#CA2A28 url("../images/phone-endcall-up-blu.png") repeat-x top left;
+	border:1px solid #DE7A7C;
+}
+.control-hldr .endCall span{
+	background:url("../images/hangup-icon.png") no-repeat center left;
+	padding-left:23px;
+}
+.control-hldr .talk{
+	background:#2C79E5 url("../images/phone-talk-up-blu.png") repeat-x top left;
+	border:1px solid #84AAED;
+}
+.control-hldr .talk span{
+	background:url("../images/mic-icon.png") no-repeat center left;
+	padding-left:20px;
+}
+
+/* FLASH SETTINGS BOX */
+.flash-hldr{
+	position:absolute;
+	background:#EAEAEA;
+	width:215px;
+	height:138px;
+	top:100px;
+	left:15px;
+	z-index: 1000;
+	visibility: hidden;
+	border:3px solid #DEDEDE;	
+}
+
+/* CHAT CLIENT STYLES */
+#chat{
+	background: #004A7D url("../images/phone-background-blu.png") repeat-x top left;
+	border:1px solid #0C0D3B;
+	padding-bottom:5px;
+	border-top:none;
+	height:321px;
+}
+.chat-box{
+	background:#D7E8F2;
+	height:270px;
+	padding:8px 10px;
+	overflow:auto;
+}
+.chat-txt{
+	background:#FFF url("../images/chat-txt-bg.png") repeat-x top left;
+	height:39px;
+	border-top:1px solid #000;
+}

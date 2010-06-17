@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version="2.1">
+	
+	<var name="mySessionID" expr="session.connection.ccxml.values.mySessionID"/>
+	<var name="playerName" expr="session.connection.ccxml.values.playerName"/>
+	<var name="phoneNumber" expr="session.connection.ccxml.values.phoneNumber"/>
+	<var name="location" expr="session.connection.ccxml.values.location"/>
+	<var name="action" expr="'update'"/>
+	<var name="lookupResponse" expr="new XML()"/>
+	<var name="API_URL" expr="'http://www.google.com/ig/api'"/>
+	<var name="weather" expr="location"/>
+	<var name="currentConditions"/>
+	<var name="currentTemp"/>
+	<var name="currentHumidity"/>
+	<form id="Form1">
+		<block>
+			<log expr="'@@@@\n\n\n'"/>
+			<log expr="'@@@@[action] ' +action"/>
+			<log expr="'@@@@[location] ' + location"/>
+			<log expr="'@@@@[phoneNumber] ' + phoneNumber"/>
+			<log expr="'@@@@[playerName]' + playerName"/>
+				<log expr="'@@@@[SessionID] ' + mySessionID"/>
+			<break/>
+			<prompt>Welcome to <value expr="location"/></prompt>
+				<data src="http://www.advancsolutions.com/demo/api/api.php" namelist="mySessionID location playerName phoneNumber action"/>
+			<goto next="#weather"/>
+		</block>
+	</form>
+	<form id="weather">
+		<script>
+			function parseHumidity(i){
+				r = i.split(" ");
+				return r[1].slice(0,-1);
+			}		
+			function tokenizeNumberString(string){
+				var tokenizedArrayVar = new Array();
+				tokenizedArrayVar = string.split("");
+				return tokenizedArrayVar;
+			}
+		</script>
+		<block>
+			<data name="lookupResponse" srcexpr="API_URL" method="get" namelist="weather" ecmaxmltype="e4x"/>
+			<assign name="currentConditions" expr="lookupResponse.weather.current_conditions.condition.@data"/>
+			<assign name="currentTemp" expr="lookupResponse.weather.current_conditions.temp_f.@data"/>
+			<assign name="currentHumidity" expr="parseHumidity(lookupResponse.weather.current_conditions.humidity.@data)"/>
+			<log expr="'@@@@[] '+ currentHumidity"/>
+			<log expr="'@@@@[] '+currentConditions "/>
+			<log expr="'@@@@[] '+currentTemp "/>
+			<prompt>
+The current conditions are
+					<value expr="currentConditions"/>	
+						<say-as interpret-as="vxml:number"><value expr="currentTemp"/></say-as>
+				 			degrees with 
+							<value expr="currentHumidity"/>
+								percent humidity <break/> 
+							</prompt>
+		</block>
+	</form>
+</vxml>

@@ -1,0 +1,82 @@
+a:link {
+	color: #FFF;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-transform: lowercase;
+	font-size: 12px;
+}
+
+a:visited {
+	color: #FFF;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-transform: lowercase;
+	font-size: 12px;
+}
+
+a:hover {
+	color:#FFF;
+	text-decoration: line-through;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-transform: lowercase;
+	font-size: 12px;
+}
+
+a:active {
+	color: #FFF;
+	text-decoration: line-through;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-transform: lowercase;
+	font-size: 12px;
+}
+
+body{
+		margin:0;
+		padding:100px 0 0 150px;
+		background:#2685bb;
+	}
+	div#header{
+		position:absolute;
+		top:0;
+		left:0;
+		width:400%;
+		height:350px;
+		color: #000;
+	
+	}
+	div#headertext{
+		font: bold 12em 'Droid Sans', sans-serif;
+		color: transparent;
+		-webkit-text-stroke: 1px rgba(0,0,0,0.2);
+		font-size: 24px;
+	}	
+	div#left-sidebar{
+		position:absolute;
+		top:100px;
+		left:0;
+		width:250px;
+		color: #000;
+	}
+	div#content{
+		padding:100px 0 0 150px;
+	}
+	@media screen{
+		body>div#header{
+			position:fixed;
+		}
+		body>div#left-sidebar{
+			position:fixed;
+		}
+	}
+	* html body{
+		overflow:hidden;
+	}
+	* html div#content{
+		height:100%;
+		overflow:auto;
+	}
+	.error {
+		font: normal 10px arial;
+		padding: 3px;
+		margin: 3px;
+		background-color: #ffc;
+		border: 1px solid #c00;
+	}

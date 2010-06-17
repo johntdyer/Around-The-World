@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<ccxml version="1.0" xmlns:voxeo="http://community.voxeo.com/xmlns/ccxml">
+
+<!-- how long to wait before assuming a session is a runaway and tearing it down -->
+<var name="conn_id"/>
+<var name="dialog_id"/>
+<var name="my_var"/>
+<var name="dialogToStart"/>
+
+<var name="mySessionID"/>
+<var name="playerName"/>
+<var name="phoneNumber"/>
+<var name="location"/>
+
+<eventprocessor>
+  <transition event="connection.alerting">
+		<foreach item="header" object="event$.protocol.sip.headers">
+			<log expr="'@@@@@ Header name: [' + name$ + '] value: ' + header"/>
+		</foreach>
+    <assign name="conn_id" expr="event$.connectionid"/>
+		
+		<assign name="location" expr="event$.connection.protocol.sip.headers['x-cityname']"/>
+		<assign name="phoneNumber" expr="event$.connection.protocol.sip.headers['x-phonenumber']"/>
+		<assign name="mySessionID" expr="event$.connection.protocol.sip.headers['x-mysessionid']"/>
+		<assign name="playerName" expr="event$.connection.protocol.sip.headers['x-playername']"/>
+
+
+		<log expr="'\n\n\n@@@@[]'+location"/>
+		<log expr="'\n\n\n@@@@[]'+phoneNumber"/>
+		<log expr="'\n\n\n@@@@[]'+mySessionID"/>
+		<log expr="'\n\n\n@@@@[]'+playerName"/>
+		
+    <accept connectionid="conn_id"/>
+  </transition>
+
+  <transition event="connection.connected">
+    <log expr="'**** STARTING DIALOG TO CONNECTION ID ' + conn_id"/>
+     <!-- edit SRC attribute to point to VXML dialog -->
+     <dialogstart src="'city_vxml.xml'" connectionid="conn_id" namelist="phoneNumber mySessionID playerName location" dialogid="dialog_id"/>
+  </transition>
+
+  <transition event="dialog.exit">
+    <log expr="'**** DIALOG COMPLETE - EXITING SESSION'"/>
+    <log expr="'**** EXITING SESSION'"/>
+     <exit/>
+  </transition>
+
+  <transition event="error.*">
+    <log expr="'**** ERROR - REASON: ' + event$.reason"/>
+      <exit/>
+  </transition>
+
+  <transition event="connection.disconnected">
+     <!-- send to unconditionally end a runaway session -->
+     <send name="'user.kill.unconditional'" target="session.id" delay="'60s'"/>
+  </transition>
+
+  <transition event="user.kill.unconditional">
+     <log expr="'**** UNCONDITIONAL KILL - EXITING SESSION'"/>
+       <exit/>
+  </transition>
+
+  <transition event="connection.failed">
+    <log expr="'**** CONNECTION FAILED - REASON: ' + event$.reason"/>
+      <exit/>
+  </transition>
+
+</eventprocessor>
+</ccxml>

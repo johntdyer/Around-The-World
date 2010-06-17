@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ccxml xmlns="http://www.w3.org/2002/09/ccxml" version="1.0">
+	<var name="playerConnID"/>
+	<var name="confid"/>
+	<var name="state0" expr="'not_inited'"/>
+	<var name="callcount" expr="0"/>
+	<var name="outboundConnID"/>
+	<var name="phoneNumber" expr="session.values.phoneNumber"/>
+	<var name="callerID" expr="session.values.callerID"/>
+	
+	<var name="playerName" expr="session.values.playerName"/>
+ 	<var name="mySessionID"	expr="session.values.mySessionID"/>
+	<var name="flashPhone" expr="session.values.flashPhone"/> <!-- Flash Gordon goes here -->
+
+	<script>
+		var Hints = new Object();
+		Hints.headers = new Object();
+
+			function setCookies(phoneNumber,playerName,mySessionID){
+				Hints.headers['x-vdirect'] = 1;
+				Hints.headers['x-mysessionid'] = mySessionID;
+				Hints.headers['x-playerName'] = playerName;
+			Hints.headers['x-phoneNumber'] = phoneNumber;
+				return true;
+			}
+		
+			function setCity(i){
+				Hints.headers['x-cityName'] = i;
+				}
+
+	</script>
+<!-- x-dialog-to-start -->
+
+	<eventprocessor statevariable="state0">
+
+		<transition event="ccxml.loaded">
+			<log expr="'@@@@[CCXML.LOADED] '"/>
+			
+			<createcall dest="'tel:+1'+flashPhone" callerid="'4074181800'" connectionid="playerConnID"/>
+			
+			<assign name="state0" expr="'welcomeDlg_start'"/>
+			<log expr="'@@@@[ ' + setCookies(phoneNumber,playerName,mySessionID) + ' ]'"/>
+		</transition>
+
+
+		<transition event="connection.connected" state="welcomeDlg_start">
+			<send name="'DIE_ZOMBIE_DIE'" target="session.id" delay="'90s'"/>
+			<log expr="'@@@@[CONNECTION.CONNECTED]'"/>
+			<log expr="'@@@@[CREATING CONFERENCE]'"/>
+			<createconference conferenceid="confid"/>
+			<assign name="playerConnID" expr="event$.connectionid"/>
+			<dialogstart src="'null://?text=Welcome to arround the world in 80 seconds....sorta&amp;termdigits=1&amp;voice=English-SAPI'" type="'application/x-texttospeech'"/>
+			<!--
+
+			 NEED A REAL DIALOG HERE   BETTER VOCIE OR SOMETHING
+
+			-->
+			<assign name="state0" expr="'welcomeDlg_end'"/>
+		</transition>
+		<transition event="dialog.exit" state="welcomeDlg_end">
+			<join id1="confid" id2="playerConnID"/>
+			<log expr="'@@@@[WELCOME DIALOG OVER] ' "/>
+			<log expr="'@@@@[START VEGAS] '"/>
+			<assign name="state0" expr="'call_vegas'"/>
+		</transition>
+		<transition event="conference.created">
+			<log expr="'******* CONFERENCE HAS BEEN CREATED, SUPER!!!'"/>
+		</transition>
+		<transition event="conference.joined" state="call_vegas">
+			<log expr="'@@@@[Calling Vegas]'"/>
+			<assign name="state0" expr="'in_vegas'"/>
+			<!-- Call Vegas -->
+			<script>setCity('vegas');</script>
+			<!--	<createcall dest="'sip:9991426400@sip-noproxy.voxeo.net'" callerid="'1112223333'" hints="Hints" connectionid="outboundConnID"/> --> <!-- get headers -->
+			<!--	<createcall dest="'sip:9991451419!sbc-external.orl.voxeo.net@sbc-staging-internal'" callerid="'1112223333'" hints="Hints" connectionid="outboundConnID"/> --><!-- VXML version-->
+
+			<createcall dest="'sip:9991451423@sip-noproxy.voxeo.net'" callerid="'1112223333'" hints="Hints" connectionid="outboundConnID"/>-->
+		</transition>
+		<transition event="connection.connected" state="in_vegas">
+			<join id1="confid" id2="outboundConnID"/>
+			<log expr="'@@@@[Call is in Vegas]'"/>
+		</transition>
+
+		<!-- Handle hangup while in Vegas -->
+
+				<transition event="connection.disconnected" state="in_vegas">
+					<log expr="'@@@@ The connectionid is: [' + event$.connectionid + ']'"/>
+					<if cond="event$.connectionid == outboundConnID">
+						<assign name="state0" expr="'call_atlanta'"/>
+						<send name="'user.call_atlanta'" targettype="'ccxml'" target="session.id"/>
+						<elseif cond="event$.connectionid == playerConnID"/>
+						<log expr="'@@@@[ PLAYER HUNG UP] ' "/>
+						<send name="'user.player_hungup'" targettype="'ccxml'" target="session.id"/>
+						<else/>
+						<log expr="'@@@@[DISCONNECT ELSE] ' "/>
+					</if>
+				</transition>
+				<transition event="user.call_atlanta" state="call_atlanta">
+					<log expr="'@@@@[Call Atlanta]'"/>
+					<assign name="state0" expr="'in_atlanta'"/>
+					<script>setCity('atlanta');</script>
+					<createcall dest="'sip:9991451423@sip-noproxy.voxeo.net'" callerid="'1112223333'" hints="Hints" connectionid="outboundConnID"/>
+
+				</transition>
+				<transition event="connection.connected" state="in_atlanta">
+					<join id1="confid" id2="outboundConnID"/>
+					<log expr="'@@@@[Call is in Atltana]'"/>
+				</transition>
+
+				<!-- Handle hangup in Atlanta -->
+
+				<transition event="connection.disconnected" state="in_atlanta">
+					<log expr="'@@@@ The connectionid is: [' + event$.connectionid + ']'"/>
+					<if cond="event$.connectionid == outboundConnID">
+						<assign name="state0" expr="'call_orlando'"/>
+						<send name="'user.call_orlando'" targettype="'ccxml'" target="session.id"/>
+						<elseif cond="event$.connectionid == playerConnID"/>
+						<log expr="'@@@@[ PLAYER HUNG UP] ' "/>
+						<send name="'user.player_hungup'" targettype="'ccxml'" target="session.id"/>
+						<else/>
+						<log expr="'@@@@[DISCONNECT ELSE] ' "/>
+					</if>
+				</transition>
+
+		<!--
+		Calling Orlando
+		-->
+		 <transition event="user.call_orlando" state="call_orlando">
+				<log expr="'@@@@[Call Orlando]'"/>
+				<assign name="state0" expr="'in_orlando'"/>
+				<script>setCity('orlando');</script>
+
+				<createcall dest="'sip:9991451423@sip-noproxy.voxeo.net'" callerid="'1112223333'" hints="Hints" connectionid="outboundConnID"/>
+
+			</transition>
+
+			<!-- Orlando Connected -->
+			<transition event="connection.connected" state="in_orlando">
+				<join id1="confid" id2="outboundConnID"/>
+				<log expr="'@@@@[Call is in Atltana]'"/>
+			</transition>
+
+		<!-- Handle hangup while in Orlando -->
+				 	<transition event="connection.disconnected" state="in_orlando">
+						<log expr="'@@@@ The connectionid is: [' + event$.connectionid + ']'"/>
+						<if cond="event$.connectionid == outboundConnID">
+							<assign name="state0" expr="'call_london'"/>
+							<send name="'user.call_london'" targettype="'ccxml'" target="session.id"/>
+							<elseif cond="event$.connectionid == playerConnID"/>
+							<log expr="'@@@@[ PLAYER HUNG UP] ' "/>
+							<send name="'user.player_hungup'" targettype="'ccxml'" target="session.id"/>
+							<else/>
+							<log expr="'@@@@[DISCONNECT ELSE] ' "/>
+						</if>
+					</transition>
+
+
+					<transition event="user.call_london" state="call_london">
+							<log expr="'@@@@[Call London]'"/>
+							<assign name="state0" expr="'in_london'"/>
+							<script>setCity('london');</script>
+							
+							<createcall dest="'sip:9991451423@sip-noproxy.voxeo.net'" callerid="'1112223333'" hints="Hints" connectionid="outboundConnID"/>
+
+						</transition>
+
+							<transition event="connection.connected" state="in_london">
+								<join id1="confid" id2="outboundConnID"/>
+								<log expr="'@@@@[Call is in London]'"/>
+							</transition>
+
+
+							<!-- Handle hangup while in London -->
+									 	<transition event="connection.disconnected" state="in_london">
+											<log expr="'@@@@ The connectionid is: [' + event$.connectionid + ']'"/>
+											<if cond="event$.connectionid == outboundConnID">
+												<assign name="state0" expr="'call_frankfurt'"/>
+												<send name="'user.call_frankfurt'" targettype="'ccxml'" target="session.id"/>
+												<elseif cond="event$.connectionid == playerConnID"/>
+												<log expr="'@@@@[ PLAYER HUNG UP] ' "/>
+												<send name="'user.player_hungup'" targettype="'ccxml'" target="session.id"/>
+												<else/>
+												<log expr="'@@@@[DISCONNECT ELSE] ' "/>
+											</if>
+										</transition>
+
+
+										 <transition event="user.call_frankfurt" state="call_frankfurt">
+													<log expr="'@@@@[Call Frankfurt]'"/>
+													<assign name="state0" expr="'in_frankfurt'"/>
+													<script>setCity('frankfurt');</script>
+													
+													<createcall dest="'sip:9991451423@sip-noproxy.voxeo.net'" callerid="'1112223333'" hints="Hints" connectionid="outboundConnID"/>
+
+												</transition>
+
+													<transition event="connection.connected" state="in_frankfurt">
+														<join id1="confid" id2="outboundConnID"/>
+														<log expr="'@@@@[Call is in Frankfurt]'"/>
+													</transition>
+
+												 	 	<!-- Handle hangup while in Frankfurt -->
+																	 	<transition event="connection.disconnected" state="in_frankfurt">
+																			<log expr="'@@@@ The connectionid is: [' + event$.connectionid + ']'"/>
+																			<if cond="event$.connectionid == outboundConnID">
+																				<assign name="state0" expr="'call_bejing'"/>
+																				<script>setCity('beijing');</script>
+																				
+																				<send name="'user.call_bejing'" targettype="'ccxml'" target="session.id"/>
+																				<elseif cond="event$.connectionid == playerConnID"/>
+																				<log expr="'@@@@[ PLAYER HUNG UP] ' "/>
+																				<send name="'user.player_hungup'" targettype="'ccxml'" target="session.id"/>
+																				<else/>
+																				<log expr="'@@@@[DISCONNECT ELSE] ' "/>
+																			</if>
+																		</transition>
+
+																			 <transition event="user.call_bejing" state="call_bejing">
+																						<log expr="'@@@@[Call Bejing]'"/>
+																						<assign name="state0" expr="'in_bejing'"/>
+																						<createcall dest="'sip:9991451423@sip-noproxy.voxeo.net'" callerid="'1112223333'" hints="Hints" connectionid="outboundConnID"/>
+																					</transition>
+
+																						<transition event="connection.connected" state="in_bejing">
+																							<join id1="confid" id2="outboundConnID"/>
+																							<log expr="'@@@@[Call is in Bejing]'"/>
+																						</transition>
+
+<!-- Bridge the caller from Frankfurt -->
+				 	<transition event="connection.disconnected" state="in_bejing">
+						<log expr="'@@@@ The connectionid is: [' + event$.connectionid + ']'"/>
+						<if cond="event$.connectionid == outboundConnID">
+							<assign name="state0" expr="'call_player'"/>
+							<script>setCity('beijing');</script>
+							
+							<send name="'user.call_player'" targettype="'ccxml'" target="session.id"/>
+							<elseif cond="event$.connectionid == playerConnID"/>
+							<log expr="'@@@@[ PLAYER HUNG UP] ' "/>
+							<send name="'user.player_hungup'" targettype="'ccxml'" target="session.id"/>
+							<else/>
+							<log expr="'@@@@[DISCONNECT ELSE] ' "/>
+						</if>
+					</transition>
+
+						 <transition event="user.call_player" state="call_player">
+									<log expr="'@@@@[Call Player]'"/>
+									<assign name="state0" expr="'call_player'"/>
+									<createcall dest="'tel:+1'+phoneNumber " callerid="callerID" hints="Hints" connectionid="outboundConnID"/>-->
+
+								</transition>
+
+									<transition event="connection.connected" state="call_player">
+										<join id1="confid" id2="outboundConnID"/>
+										<log expr="'@@@@[Call has been transfered to player]'"/>
+									</transition>
+
+
+		<transition event="user.player_hungup">
+			<log expr="'@@@@[ dont hate the player, hate the game]'"/>
+			<log expr="'@@@@[ Player has hungup]'"/>
+			<exit/>
+		</transition>
+
+		<transition event="error.*">
+			<log expr="'*** ERROR DETECTED: '+ event$.name"/>
+			<exit/>
+		</transition>
+		<transition event="DIE_ZOMBIE_DIE">
+			<log expr="'@@@@[ZOMBIE DEATH] ' "/>
+			<exit/>
+		</transition>
+	</eventprocessor>
+</ccxml>
