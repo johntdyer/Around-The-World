@@ -38,7 +38,7 @@ function buildAudioFileArray(i) {
     var returnVal = [];
     if (temp & lt; = 19) return returnVal = [temp];
     else if (temp == 20) return returnVal = [20];
-    else if (temp == 30) return returnVal = [30];
+    else if (temp == 30) return returnVal = [30];   
     else if (temp == 40) return returnVal = [40];
     else if (temp == 50) return returnVal = [50];
     else if (temp == 60) return returnVal = [60];
