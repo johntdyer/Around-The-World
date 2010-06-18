@@ -5,8 +5,8 @@
 		
 		<block>
 			<var name="baseURL" expr="'../audio'"/>
-			<var name="testValue" expr="'101'"/>
-			<var name="location" expr="'atlanta'"/>
+			<var name="testValue" expr="'99'"/>
+			<var name="location" expr="'vegas'"/>
 			<var name="currentConditions" expr="'thunderstorm'"/>
 			<log expr="'@@@@' + baseURL+'/'+location+'/greeting.wav'"/>
 			<audio expr="baseURL+'/'+location+'/greeting.wav'">

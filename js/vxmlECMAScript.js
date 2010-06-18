@@ -48,7 +48,6 @@ function buildAudioFileArray(i) {
     else if (temp >= 21 && temp <= 99) {
         var first = i.slice(0, 1);
         var second = i.slice(1, 2);
-        console.log(first);
         return returnVal = [first + '0', second];
     }
     else if (temp >= 100) {
