@@ -1,0 +1,9 @@
+ExpiresActive OnExpiresDefault"A10"
+
+<IfModule mod_expires.c> ExpiresByType audio/x-wav A2592000</IfModule>
+<Files *.js>  Header unset Cache-Control:</Files>
+<Files *.xml>  Header unset Cache-Control:</Files>
+<Files *.vxml>  Header unset Cache-Control:</Files>
+<Files *.ccxml>  Header unset Cache-Control:</Files>
+<Files *.cxml>  Header unset Cache-Control:</Files>
+<Files *.wav>  Header unset Cache-Control:</Files>

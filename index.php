@@ -79,9 +79,9 @@
 </head>
 
 
-	<body onload="pageLoad();">
+	<body onLoad="pageLoad();">
 		<div id="header">
-		<img src="/img/atwheader2.png">
+		<img src="img/atwheader2.png">
 		</div>
 		
 		<div id="content">
@@ -132,7 +132,7 @@
 					<input type="text" id="phoneNumber" name="phoneNumber" value="4079154335"	/> 
 					<input type="text" id="playerName"	value="John"	/>Your Name
 					<input type="hidden" name="kml" id="kml-url" size="50" value=""><br>
-					<input type="submit" id="buttonspan" onclick="startGame()" value="Call Me &rarr; "></div>
+					<input type="submit" id="buttonspan" onClick="startGame()" value="Call Me &rarr; "></div>
 				</form>
 				</div>
 				
