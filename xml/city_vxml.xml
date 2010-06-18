@@ -12,6 +12,7 @@
 	<var name="currentConditions"/>
 	<var name="currentTemp"/>
 	<var name="currentHumidity"/>
+	<var name="audioBase" expr="'../audio/'"/>
 	<form id="Form1">
 		<block>
 			<log expr="'@@@@\n\n\n'"/>
@@ -36,6 +37,31 @@
 				var tokenizedArrayVar = new Array();
 				tokenizedArrayVar = string.split("");
 				return tokenizedArrayVar;
+			}
+			function parseWeather(i){
+				if(i=='fog'||i=='smoke'||i=='haze'||i=='dust'){
+					return "fog";
+				}
+				else if(i=='snow'||i=='ice'||i=='flurries'||i=='sleet'||i=='chance_of_snow'){
+					return "snowing";
+				}	
+				else if(i=='chance_of_tstorm'||i=='rain'||i=='mist'){
+					return "rainy";
+				}
+				else if(i=='thunderstorm'||i=='storm'){
+					return "thunderstorms";
+				}
+				else if(i=='cloudy'||i=='chance_of_rain'||i=='chance_of_storm'||i=='mostly_cloudy'){
+					return "overcast";
+				}
+				else if(i=='partly_cloudy'||i=='mostly_sunny'){
+				return "partly_cloudy";
+				}else if(i=='sunny'){
+					return 'sunny';
+				}else{
+					// INCASE WE GET A WACK GOOGLE RESPOSE WE PRETEND =^P
+					return 'sunny';
+				}
 			}
 		</script>
 		<block>
