@@ -66,11 +66,10 @@
 		
 		function startGame(){
 			mySessionID=document.guid;
-			URL = 'http://advancsolutions.com/demo/kml/kml.php?mySessionID='+mySessionID
+			URL = 'http://incubator.orl.voxeo.net/roundTheWorld/kml/kml.php?mySessionID='+mySessionID
 			$("kml-url").val(document.URL);
 			phoneNumber =  $('#phoneNumber').val();
 			playerName =  $('#playerName').val();
-			flashPhone =  $('#flashPhone').val();
 			if(document.guid!=null){
 				$.get('api/api.php', { mySessionID: mySessionID,playerName: playerName,phoneNumber: phoneNumber,flashPhone: flashPhone,action: "new" } );
 			}
@@ -101,8 +100,8 @@
 		            flashElementId:"phone01",
 		            onConnect: function(event) {
 		                window.console.log("callback connected");
-		                $("#sessionId").text(event.phone.sessionId);
-
+		                flashPhone=event.phone.sessionId;
+										console.log(flashPhone); // SIP URI
 		            },
 								onFlashPermissionShow: function(event){
 			//					$('phone01').css	 MAKE DIV BIGGER
@@ -112,9 +111,10 @@
 								},
 		            onIncomingCall: function(event) {
 		                call = event.call;
+										// Ring Tone?
+										call.answer();
 		            }
 		        });
-
 		        function makeCall() {
 		            numberToDial = $("#destinationTxt").val();
 		            window.console.log("dialing " + numberToDial);
@@ -136,7 +136,6 @@
 			</script>
 
       Call State <span id="callState"></span><br/>
-      Session ID <span id="sessionId"></span><br/>
 				<div id="dialer">
 
 					<div id="phone">
@@ -165,7 +164,7 @@
 		<br class="clearfix"/>
 	</div>
 		<div class="control-hldr">
-			<a href="#" class="control-btn call"><span>Start</span></a>
+			<a href="#" class="control-btn call" onClick="startGame();"><span>Start</span></a>
 
        
 			<a href="http://www.voxeo.com" target="_blank" title="www.Voxeo.com" class="logo-icon"></a>
@@ -178,8 +177,8 @@
 					<form action="#" method="get" name="startForm" accept-charset="utf-8">
           <input type="text" id="sessionId">					
 					<div id="hidden">
-					<input type="text" id="flashPhone" value="4074740214"	/> <- Flash Phone
-					Your Number
+<!--					<input type="text" id="flashPhone" value="4074740214"	/> <- Flash Phone 
+					Your Number -->
 					</br>
 					<input type="text" id="phoneNumber" name="phoneNumber" value="4079154335"	/> 
 					<input type="text" id="playerName"	value="John"	/>Your Name

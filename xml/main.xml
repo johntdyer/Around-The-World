@@ -36,7 +36,7 @@
 		<transition event="ccxml.loaded">
 			<log expr="'@@@@[CCXML.LOADED] '"/>
 			
-			<createcall dest="'tel:+1'+flashPhone" callerid="'4074181800'" connectionid="playerConnID"/>
+			<createcall dest="'sip:'+flashPhone" callerid="'4074181800'" connectionid="playerConnID"/>
 			
 			<assign name="state0" expr="'welcomeDlg_start'"/>
 			<log expr="'@@@@[ ' + setCookies(phoneNumber,playerName,mySessionID) + ' ]'"/>
@@ -129,7 +129,6 @@
 				<log expr="'@@@@[Call Orlando]'"/>
 				<assign name="state0" expr="'in_orlando'"/>
 				<script>setCity('orlando');</script>
-
 				<createcall dest="'sip:9991451423@sip-noproxy.voxeo.net'" callerid="'1112223333'" hints="Hints" connectionid="outboundConnID"/>
 
 			</transition>

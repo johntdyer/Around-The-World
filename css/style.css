@@ -84,7 +84,7 @@ background: transparent url('img/buttona.gif') no-repeat scroll top right;
 }
 
 #buttonspan {
-    background: transparent url('img/buttonspan.gif') no-repeat;
+    background: transparent url('../img/buttonspan.gif') no-repeat;
     display: block;
     line-height: 14px;
     padding: 5px 0 5px 18px;
