@@ -35,22 +35,23 @@ function parseWeather(i) {
 
 function buildAudioFileArray(i) {
     var temp = Number(i);
-    var returnVal = [];
-    if (temp & lt; = 19) return returnVal = [temp];
-    else if (temp == 20) return returnVal = [20];
-    else if (temp == 30) return returnVal = [30];   
-    else if (temp == 40) return returnVal = [40];
-    else if (temp == 50) return returnVal = [50];
-    else if (temp == 60) return returnVal = [60];
-    else if (temp == 70) return returnVal = [70];
-    else if (temp == 80) return returnVal = [80];
-    else if (temp == 90) return returnVal = [90];
-    else if (temp & gt; = 21 & amp; & amp; temp & lt; = 99) {
-        var first = String(temp).slice(0, 1);
-        var second = String(temp).slice(1, 2);
+    var returnVal = [];        
+    if (temp <= 19) return returnVal = [temp];
+        else if (temp == 20){ return returnVal = [20];}
+        else if (temp == 30){ return returnVal = [30];}
+        else if (temp == 40){ return returnVal = [40];}
+        else if (temp == 50){ return returnVal = [50];}
+        else if (temp == 60){ return returnVal = [60];}
+    else if (temp == 70){ return returnVal = [70];}
+    else if (temp == 80){ return returnVal = [80];}
+    else if (temp == 90){ return returnVal = [90];}
+    else if (temp >= 21 && temp <= 99) {
+        var first = i.slice(0, 1);
+        var second = i.slice(1, 2);
+        console.log(first);
         return returnVal = [first + '0', second];
     }
-    else if (temp & gt; = 100) {
+    else if (temp >= 100) {
         var first = String(temp).slice(1, 2);
         var second = String(temp).slice(2, 3);
         if (first == "0") first = 'and';
