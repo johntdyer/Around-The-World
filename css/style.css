@@ -8,6 +8,19 @@ body	{
 	background-position:left top;
 }
 
+#phone-screen{
+    width:230px;
+	height:53px;
+	background:url("images/phone-screen-blu.png") repeat-x top left;
+	line-height:53px;
+	padding: 10px;
+	  margin-left: 24px; 
+	color:#003366;
+	font-size:100%;
+	text-shadow:1px 1px 1px #FFF;
+}
+
+
 #header {
 	/*background-color: #0a0a0a;
 	-moz-border-radius: 5px;
@@ -20,19 +33,18 @@ body	{
 	text-align: center;
 	display: inline;
 	margin: 0px 30%;
-	font-family: 'Shortcut';
-	src: url('/fonts/short.ttf');
-	text-padding: 3px;
 	color: #FFF;
 	text-shadow: 1px 1px #AA3833; 
-
 }
-
 #logo {
 	width: 300px;
 	height: auto;
 }
 
+#phone-screen{
+ 	font-size: 40px;
+   
+}
 #content {
 	/* margin: 20px;
 	padding: 20px 5px 0px;
@@ -43,6 +55,12 @@ body	{
 	width: 90%;*/
 	color: #FFF;
 	text-align: center;
+}
+
+#middle{
+  margin-bottom: -10px; 
+  	font-size: 14px;
+
 }
 
 #dialer {
@@ -65,6 +83,7 @@ body	{
 #phone {
 	display: inline;
 }
+
 
 .clear { 
     overflow: hidden;
@@ -116,7 +135,3 @@ background: transparent url('img/buttona.gif') no-repeat scroll top right;
 		background-color: #ffc;
 		border: 1px solid #c00;
 	}
-
-textarea {
-     resize: vertical;
-}

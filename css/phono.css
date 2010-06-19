@@ -17,7 +17,7 @@ body{
 }
 a:active, a, :focus{
   outline: none;
-  -moz-outline-style: none;
+  /*-moz-outline-style: none;*/
 }
 #phono{
 	position:relative;

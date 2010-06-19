@@ -1,9 +1,7 @@
 <html>
 <head>
-	<script type="text/javascript" src="http://www.google.com/jsapi?hl=en&amp;key=ABQIAAAAmT4HTUYKdvGqcdPCdYMIchRI67tzt4RgYf9_Oo6dkCFUpwfw1BS0ItGt6lkqTLG-jMDGkI63EPoFRw"></script>
-	
+	<script type="text/javascript" src="http://www.google.com/jsapi?hl=en&amp;key=ABQIAAAAmT4HTUYKdvGqcdPCdYMIchRI67tzt4RgYf9_Oo6dkCFUpwfw1BS0ItGt6lkqTLG-jMDGkI63EPoFRw"></script>	
 	<script type="text/javascript" charset="utf-8">google.load("jquery", "1.4.2");</script>
-
 <?
 //Set no caching
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");

@@ -22,7 +22,7 @@
 				<log expr="'@@@@[SessionID] ' + mySessionID"/>
 			<break/>
 			<prompt>Welcome to <value expr="location"/></prompt>
-				<data src="http://www.advancsolutions.com/demo/api/api.php" namelist="mySessionID location playerName phoneNumber action"/>
+				<data src="http://incubator.orl.voxeo.com/roundTheWorld/api/api.php" namelist="mySessionID location playerName phoneNumber action"/>
 			<goto next="#weather"/>
 		</block>
 	</form>
