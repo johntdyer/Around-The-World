@@ -13,7 +13,7 @@ header("Pragma: no-cache");
 			<refreshVisibility>1</refreshVisibility>
 			<flyToView>1</flyToView>
 			<Link>
-				<href>http://advancsolutions.com/demo/kml/location.php</href>
+				<href>http://demos.voxeo.com/roundTheWorld/kml/location.php</href>
 				<cookie>mySessionID=<?echo $_GET['mySessionID'] ;?></cookie>				
 				<httpQuery>mySessionID=<?echo $_GET['mySessionID'] ;?></httpQuery>
 				<refreshInterval>2</refreshInterval>

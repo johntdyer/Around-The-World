@@ -3,22 +3,23 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <title>Around The World in 80 Seconds, Kinda</title>
 		<LINK href="css/style.css" rel="stylesheet" type="text/css">
-<!--	<script type="text/javascript" src="http://www.google.com/jsapi?hl=en&amp;key=ABQIAAAAmT4HTUYKdvGqcdPCdYMIchRI67tzt4RgYf9_Oo6dkCFUpwfw1BS0ItGt6lkqTLG-jMDGkI63EPoFRw"></script>   advancsolutions.com key -->	
-		<script type="text/javascript" src="http://www.google.com/jsapi?hl=en&amp;key=ABQIAAAAmT4HTUYKdvGqcdPCdYMIchSyNaptjNy8GpH-izRmsBnlJuK4MxRc7IxgCFeZ7alyNbmYJ0NQEQDQpg"></script>
+		<script type="text/javascript" src="http://www.google.com/jsapi?hl=en&amp;key=ABQIAAAAmT4HTUYKdvGqcdPCdYMIchSp2RdxVNDznV5ZBnMxyVSemJikNhQlGWMzvqUgCzpjEK67J9TDS4FqyA"></script>
 		<script src="js/kml.js" type="text/javascript" charset="utf-8"></script>
 	
-	<link href="css/phono.css" rel="stylesheet" type="text/css" /> 
-<!--	<link type="text/css" rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/redmond/jquery-ui.css">-->
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/jquery-ui.min.js"></script>	
-	<script type="text/javascript" src="lib/FABridge.js"></script>
-	<script type="text/javascript" src="lib/flashembed.min.js"></script>
-	<script type="text/javascript" src="lib/phono.js"></script>
-	<script src="js/jQueryCookie.js" type="text/javascript" charset="utf-8"></script>
-	<script src="js/jQueryGUID.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript" charset="utf-8">
+		<link href="css/phono.css" rel="stylesheet" type="text/css" /> 
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/jquery-ui.min.js"></script>	
+		<script type="text/javascript" src="lib/FABridge.js"></script>
+		<script type="text/javascript" src="lib/flashembed.min.js"></script>
+		<script type="text/javascript" src="lib/phono.js"></script>
+		<script src="js/jQueryCookie.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jQueryGUID.js" type="text/javascript" charset="utf-8"></script>
+		
+		<script type="text/javascript" charset="utf-8">
 		var number="";
-
+		mySessionID=document.guid;
+		
+		
 		$(document).ready(function(){
 			
 			$(".digit").click(function(){
@@ -27,7 +28,6 @@
 					alert("10 digit number (eg 4075551212)")
 					$("#phone-screen").text(this.number);
 					return false;
-					
 				}else{
 					number+=$(this).attr("name");
 					console.log(number);
@@ -49,8 +49,6 @@
           }
       },500);
 		});
-		
-		mySessionID=document.guid;
 		
 		function startGame(){
 			mySessionID=document.guid;
@@ -75,8 +73,6 @@
 		<div id="header">
 			<img src="img/atwheader2.png">
 		</div>
-
-			
 		<div id="content">
 			<div id="phone01" style="height: 1px; width: 1px; background-color:#000;"></div>
 			<script type="text/javascript" charset="utf-8">
@@ -122,10 +118,9 @@
 
 				<div id="dialer">
 					<div id="phone">
-	<div id="phone-screen">
-		 <span id="callState"></span>
-	<!--	<textarea col="9" rows="1" type="text" id="screen"> </textarea> -->
-	</div>
+						<div id="phone-screen">
+		 					<span id="callState"></span>
+						</div>
 			<div id="middle"></div>
 	<div class="digit-hldr">
 		<a href="#" name="1" class="digit" > <span class="number">1</span></a>

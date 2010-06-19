@@ -44,7 +44,7 @@
 
 
 		<transition event="connection.connected" state="welcomeDlg_start">
-			<send name="'DIE_ZOMBIE_DIE'" target="session.id" delay="'90s'"/>
+			<send name="'DIE_ZOMBIE_DIE'" target="session.id" delay="'600s'"/>
 			<log expr="'@@@@[CONNECTION.CONNECTED]'"/>
 			<log expr="'@@@@[CREATING CONFERENCE]'"/>
 			<createconference conferenceid="confid"/>

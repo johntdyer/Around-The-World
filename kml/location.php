@@ -18,12 +18,12 @@ generateMarker(getLocation($mySessionID), "Voxeo Data Center",getCoordinates(get
   <description><![CDATA[ <a href="http://kaaosa.com">Kaaosa.com</a> is back! ]]></description>
   <name>Voxeo.com</name>
   <Icon>
-    <href>http://advancsolutions.com/demo/img/voxeo.gif</href>
+    <href>http://demos.voxeo.com/roundTheWorld/img/voxeo.gif</href>
   </Icon>
   <visibility>1</visibility>
-	<refreshInterval>3</refreshInterval>
+	<refreshInterval>2</refreshInterval>
 	<viewRefreshMode>onInterval</viewRefreshMode>
-	<viewRefreshTime>3</viewRefreshTime>
+	<viewRefreshTime>2</viewRefreshTime>
   <overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>
   <screenXY x="0" y="1" xunits="fraction" yunits="fraction"/>
 </ScreenOverlay>
@@ -41,9 +41,10 @@ function generateMarker($title, $desc, $coordinates) { ?>
   <LookAt>
     <longitude><? echo $coordinates['long']; ?></longitude>
     <latitude><? echo $coordinates['lat']; ?></latitude>
-    <range>200.00</range>
+    <range>50.00</range>
     <tilt>50</tilt>
     <heading>0</heading>
+		<altitude>5000</altitude>
   </LookAt>
   <Point>
     <coordinates><? echo $coordinates['long'].",".$coordinates['lat']; ?></coordinates>
