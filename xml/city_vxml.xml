@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <vxml version="2.1">
+	<script src="../js/vxmlECMAScript.js?v=2"/>
 	
 	<var name="mySessionID" expr="session.connection.ccxml.values.mySessionID"/>
 	<var name="playerName" expr="session.connection.ccxml.values.playerName"/>
@@ -8,6 +9,8 @@
 	<var name="action" expr="'update'"/>
 	<var name="lookupResponse" expr="new XML()"/>
 	<var name="API_URL" expr="'http://www.google.com/ig/api'"/>
+	<var name="VOXEO_API" expr="'http://incubator.orl.voxeo.net/roundTheWorld/'"/>
+	<var name="baseAudioURL" expr="'../audio'"/>
 	<var name="weather" expr="location"/>
 	<var name="currentConditions"/>
 	<var name="currentTemp"/>
@@ -19,10 +22,12 @@
 			<log expr="'@@@@[location] ' + location"/>
 			<log expr="'@@@@[phoneNumber] ' + phoneNumber"/>
 			<log expr="'@@@@[playerName]' + playerName"/>
-				<log expr="'@@@@[SessionID] ' + mySessionID"/>
+			<log expr="'@@@@[SessionID] ' + mySessionID"/>
 			<break/>
-			<prompt>Welcome to <value expr="location"/></prompt>
-				<data src="http://incubator.orl.voxeo.com/roundTheWorld/api/api.php" namelist="mySessionID location playerName phoneNumber action"/>
+				<log expr="'@@@@' + baseAudioURL+'/'+location+'/greeting.wav'"/>
+				<audio expr="baseAudioURL+'/'+location+'/greeting.wav'">Welcome to <value expr="location"/></audio>
+				<data srcexpr="VOXEO_API+'api/api.php'" namelist="mySessionID location playerName phoneNumber action"/>
+
 			<goto next="#weather"/>
 		</block>
 	</form>
@@ -46,6 +51,21 @@
 			<log expr="'@@@@[] '+ currentHumidity"/>
 			<log expr="'@@@@[] '+currentConditions "/>
 			<log expr="'@@@@[] '+currentTemp "/>
+			<log expr="'@@@@[] ' +baseAudioURL+'/'+location+'/the_current_conditions_are.wav'"/>
+			<audio expr="baseAudioURL+'/'+location+'/the_current_conditions_are.wav'">The current conditions are</audio>
+			<audio expr="baseAudioURL+'/'+location+'/'+parseWeather(currentConditions)+'.wav'"><value expr="currentConditions"/></audio>
+			<log expr="'@@@@[buildAudioFileArray('+currentTemp+')] ' + buildAudioFileArray(currentTemp)"/>
+
+			<foreach item="value" array="buildAudioFileArray(currentTemp)">
+				<log expr="'@@@@: ' + value"/>
+				<audio expr="baseAudioURL+'/'+location+'/'+value+'.wav'" maxage="2592000" maxstale="2592000" fetchhint="prefetch">
+					<value expr="value"/>
+				</audio>
+			</foreach>
+			
+			<audio expr="baseAudioURL+'/'+location+'/degrees.wav'">degrees</audio>
+			<audio expr="baseAudioURL+'/'+location+'/closing.wav'"/>
+<!--
 			<prompt>
 The current conditions are
 					<value expr="currentConditions"/>	
@@ -54,6 +74,7 @@ The current conditions are
 							<value expr="currentHumidity"/>
 								percent humidity <break/> 
 							</prompt>
+							-->
 		</block>
 	</form>
 </vxml>

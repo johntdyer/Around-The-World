@@ -4,32 +4,32 @@
 		<script src="../js/vxmlECMAScript.js?v=2"/>
 		
 		<block>
-			<var name="baseURL" expr="'../audio'"/>
+			<var name="baseAudioURL" expr="'../audio'"/>
 			<var name="testValue" expr="'99'"/>
 			<var name="location" expr="'vegas'"/>
 			<var name="currentConditions" expr="'thunderstorm'"/>
-			<log expr="'@@@@' + baseURL+'/'+location+'/greeting.wav'"/>
-			<audio expr="baseURL+'/'+location+'/greeting.wav'">
+			<log expr="'@@@@' + baseAudioURL+'/'+location+'/greeting.wav'"/>
+			<audio expr="baseAudioURL+'/'+location+'/greeting.wav'">
 						Welcome to <value expr="location"/>
 			</audio>
-			<log expr="'@@@@[] ' +baseURL+'/'+location+'/the_current_conditions_are.wav'"/>
-			<audio expr="baseURL+'/'+location+'/the_current_conditions_are.wav'">
+			<log expr="'@@@@[] ' +baseAudioURL+'/'+location+'/the_current_conditions_are.wav'"/>
+			<audio expr="baseAudioURL+'/'+location+'/the_current_conditions_are.wav'">
 					The current conditions are
 			</audio>
-			<audio expr="baseURL+'/'+location+'/'+parseWeather(currentConditions)+'.wav'">
+			<audio expr="baseAudioURL+'/'+location+'/'+parseWeather(currentConditions)+'.wav'">
 				<value expr="currentConditions"/>
 			</audio>
 			<log expr="'@@@@[buildAudioFileArray('+testValue+')] ' + buildAudioFileArray(testValue)"/>
 			<foreach item="value" array="buildAudioFileArray(testValue)">
 				<log expr="'@@@@: ' + value"/>
-				<audio expr="baseURL+'/'+location+'/'+value+'.wav'" maxage="2592000" maxstale="2592000" fetchhint="prefetch">
+				<audio expr="baseAudioURL+'/'+location+'/'+value+'.wav'" maxage="2592000" maxstale="2592000" fetchhint="prefetch">
 					<value expr="value"/>
 				</audio>
 			</foreach>
-			<audio expr="baseURL+'/'+location+'/degrees.wav'">
+			<audio expr="baseAudioURL+'/'+location+'/degrees.wav'">
 						degrees
 				</audio>
-			<audio expr="baseURL+'/'+location+'/closing.wav'"/>
+			<audio expr="baseAudioURL+'/'+location+'/closing.wav'"/>
 		</block>
 	</form>
 </vxml>
