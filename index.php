@@ -31,21 +31,25 @@
 						'message': "Please key in your number and press start",
 						'icon'   : "voxeo",
 						"speed": 500,
-						'timeout': false
+						'timeout': 15000
 					});
-					
-					
-		//	$.sound.play('audio/intro/this_is_hal.wav');
-			
 			$(".digit").click(function(){
 				if((number.length+1)>13){
-					console.log("more then 10 digits");
-					alert("10 digit number (eg (407)555-1212)")
+					console.log("Warning: To many digits keyed in");
+					//Growl alert more then 10 digits
+					$.Growl.show({
+						'title'  : "Warning",
+						'message': "To many digits, only ten digits (407)867-5309",
+						'icon'   : "warning",
+						"speed": 500,
+						"timeout": 1500
+					});
+
 					$("#phone-screen").text(formatDisplay(this.number));
 					return false;
 				}else{
 					number+=$(this).attr("name");
-					console.log(number);
+					console.log("Keypad Input-> " + number);
 					$("#phone-screen").text(formatDisplay(number));	
 					return false;
 				}
@@ -54,10 +58,9 @@
 			
 			window.setInterval(function() {
 				try {
-					$("#middle").text(phone.state());
 						if(call != null) {
-							//							$("#callState").text(call.state());  // Maybe put this on screen?
-							// Using Growl here now
+							//$("#callState").text(call.state());  // Maybe put this on screen?
+							// Using Growl now
 						}
 					}
 					catch(e) {
@@ -75,7 +78,9 @@
 						"speed": 500,
 						"timeout": 3000
 					});
-			}else if(number.length==12){
+			}else{
+				if(number.length==13)
+				{
 					mySessionID=document.guid;
 					URL = 'http://demos.voxeo.com/roundTheWorld/kml/kml.php?mySessionID='+mySessionID
 						$("kml-url").val(document.URL);
@@ -84,28 +89,29 @@
 								if(document.guid!=null)	$.get('api/api.php', { mySessionID: mySessionID,playerName: playerName,phoneNumber: phoneNumber,flashPhone: flashPhone,action: "new" } );
 							$.Growl.show({
 									'title'  : "Started",
-									'message': "The Voxeo Hosted Network is not calling you  is now registered on Voxeo's Network",
+									'message': "The Voxeo hosted Network is now calling you ",
 									'icon'   : "voxeo",
 									"speed": 500,
 									"timeout": 3000
 							});
 						buttonClick();
-			}else{
-				$.Growl.show({
-					'title'  : "Error",
-					'message': "Not enough digits in phone number",
-					'icon'   : "error",
-					"speed": 500,
-					"timeout": 3000
-				});
+				}	else 
+				{
+					$.Growl.show({
+						'title'  : "Error",
+						'message': "Not enough digits in phone number",
+						'icon'   : "error",
+						"speed": 500,
+						"timeout": 3000
+					});
+				}
 			}
 		}
-
 		function pageLoad(){
 			init();
 			if(document.guid==null){
 				document.guid = jQuery.Guid.Value();
-				window.console.log(document.guid);
+				window.console.log("Player SessionID: " + document.guid);
 			}
 		}
 </script>
@@ -121,15 +127,13 @@
 				var phone = $.phono({
 														flashElementId:"phone01",
 														onConnect: function(event) {
-															window.console.log("callback connected");
+															//window.console.log("callback connected");
 															flashPhone=event.phone.sessionId;
 															phoneRegistered=true;
-															console.log(flashPhone); // SIP URI
-																//$.sound.play('audio/rings/Twinkles.wav');
-
+																$.sound.play('audio/rings/Twinkles.wav');
 																// Grown Alert
 																$.Growl.show({
-																	'title'  : "Connected",
+																	'title'  : "Ready",
 																	'message': "Phone is now registered on Voxeo's Network",
 																	'icon'   : "voxeo",
 																	"speed": 500,
@@ -146,17 +150,17 @@
 															call = event.call;
 															// Ring Tone?
 															call.answer();
-															$.sound.play('audio/rings/Twinkles.wav');
+														//	ring = $.sound.play('audio/rings/ring.wav');   // Need to edit ring
 															$.Growl.show({
 																'title'  : "Call",
-																'message': "Inbound Call (Audio Answer On)",
+																'message': "Inbound Call (Auto Answer On)",
 																'icon'   : "voxeo",
 																"speed": 500,
 																"timeout": 2000
 															});
 														}
 													});
-													
+/*
 													function makeCall() {
 														numberToDial = $("#destinationTxt").val();
 														window.console.log("dialing " + numberToDial);
@@ -175,7 +179,7 @@
 															});
 															window.console.log(call);
 														}
-														
+*/
 														function replaceAll(text, strA, strB){
 															while ( text.indexOf(strA) != -1){
 																text = text.replace(strA,strB);
@@ -184,7 +188,6 @@
 														}
 															
 														function formatDisplay(i){
-														
 																if(i.length==3){
 																	number='('+number+')';
 																	return number;
@@ -194,8 +197,7 @@
 																}
 																return i;
 															}
-														
-														
+															
 														function fetchDisplay(str){
 															console.log("Input" + str);
 															text=replaceAll(replaceAll(str,"(",""),")","");
@@ -239,7 +241,6 @@
 					</br>
 					<input type="text" id="playerName"	value="John"	/>Your Name
 					<input type="hidden" name="kml" id="kml-url" size="50" value=""><br>
-					<input type="submit" id="buttonspan" onClick="startGame()" value="Call Me &rarr; "></div>
 				</form>
 				</div>				
 				<div id="map">

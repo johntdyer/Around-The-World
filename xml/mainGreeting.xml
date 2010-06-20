@@ -2,7 +2,8 @@
 <vxml version="2.1">
 	<form id="Form1">
 		<block>
-			<audio src="../audio/mainGreeting.wav">Welcome to around the world in 80 days, kinda</audio>
+			<log expr="'@@@@[mainGreeting.xml] Play mainGreetingIntro.wav'"/>
+			<audio src="../audio/greeting/mainGreetingIntro.wav">Welcome to around the world in 80 days, kinda</audio>
 		</block>
 	</form>
 </vxml>

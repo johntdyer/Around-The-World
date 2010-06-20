@@ -46,8 +46,7 @@
 					<assign name="playerConnID" expr="event$.connectionid"/>
 					<assign name="state0" expr="'welcomeDlg_end'"/>
 					<log expr="'@@@@[ Start Dialog ] '"/>
-					<dialogstart src="'null://?text=Welcome to arround the world in 80 seconds....sorta&amp;termdigits=1&amp;voice=English-SAPI'" type="'application/x-texttospeech'"/> 
-<!--					<dialogstart scr="mainGreeting.xml" type="'application/voicexml+xml'"/>    -->
+					<dialogstart src="'mainGreeting.xml'" type="'application/voicexml+xml'"/>
 				</transition>
 				
 				<transition event="dialog.exit" state="welcomeDlg_end">
@@ -67,7 +66,7 @@
 					<!--	<createcall dest="'sip:9991426400@sip-noproxy.voxeo.net'" callerid="'1112223333'" hints="Hints" connectionid="outboundConnID"/> --> <!-- get headers -->
 					<!--	<createcall dest="'sip:9991451419!sbc-external.orl.voxeo.net@sbc-staging-internal'" callerid="'1112223333'" hints="Hints" connectionid="outboundConnID"/> --><!-- VXML version-->
   			
-					<createcall dest="'sip:9991451423@sip-noproxy.voxeo.net'" callerid="'1112223333'" hints="Hints" connectionid="outboundConnID"/>-->
+					<createcall dest="'sip:9991451423@sip-noproxy.voxeo.net'" callerid="'1112223333'" hints="Hints" connectionid="outboundConnID"/>
 				</transition>
 				<transition event="connection.connected" state="in_vegas">
 					<join id1="confid" id2="outboundConnID"/>
@@ -212,13 +211,12 @@
 					<log expr="'@@@@[Call is in Bejing]'"/>
 				</transition>
 
-				<!-- Bridge the caller from Frankfurt -->
+				<!-- Bridge the caller into game -->
 
 				<transition event="connection.disconnected" state="in_bejing">
 					<log expr="'@@@@ The connectionid is: [' + event$.connectionid + ']'"/>
 						<if cond="event$.connectionid == outboundConnID">
 							<assign name="state0" expr="'call_player'"/>
-							<script>setCity('beijing');</script>
 							<send name="'user.call_player'" targettype="'ccxml'" target="session.id"/>
 							<elseif cond="event$.connectionid == playerConnID"/>
 								<log expr="'@@@@[ PLAYER HUNG UP] ' "/>
