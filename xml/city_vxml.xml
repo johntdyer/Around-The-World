@@ -9,7 +9,7 @@
 	<var name="action" expr="'update'"/>
 	<var name="lookupResponse" expr="new XML()"/>
 	<var name="API_URL" expr="'http://www.google.com/ig/api'"/>
-	<var name="VOXEO_API" expr="'http://incubator.orl.voxeo.net/roundTheWorld/'"/>
+	<var name="VOXEO_API" expr="'http://demos.voxeo.com/roundTheWorld/'"/>
 	<var name="baseAudioURL" expr="'../audio'"/>
 	<var name="weather" expr="location"/>
 	<var name="currentConditions"/>

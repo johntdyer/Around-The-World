@@ -1,5 +1,7 @@
 <?
-$TOKEN_ID='0adddba0844125469eb72bfba2169a42e2d9ed1726b4350d44c8505d71dbf10bb2f7437785a753e3ddba718b';
+$TOKEN_ID='45963c3df2dca5449364065a46df68698f2a9916da1451dd2902e0b99a293fadcb306f8be8c974ef31e5e232';
+
+# Staging Token 0adddba0844125469eb72bfba2169a42e2d9ed1726b4350d44c8505d71dbf10bb2f7437785a753e3ddba718b';
 $DEMO_CALLER_ID='4074181800';
 $host = "localhost";
 $user = "voxeo_demo";
@@ -14,7 +16,7 @@ function getCoordinates($l){
 		'orlando'=>	array('lat'=>28.54420,	'long'=>-81.37911),
 		'atlanta'=>	array('lat'=>33.75544,	'long'=>-84.39158),
 		'beijing'=>	array('lat'=>39.90549,	'long'=>116.22296),
-		'hardrock'=>array('lat'=>28.5383355,'long'=>-81.3792365),
+		'hardrock'=>array('lat'=>28.476299,'long'=>-81.464867),
 		'frankfurt'=>array('lat'=>50.09661,'long'=>8.64349)
 		);
 	return $dataCenters[strtolower($l)];

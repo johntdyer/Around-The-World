@@ -11,13 +11,20 @@
 	<var name="playerName" expr="session.values.playerName"/>
  	<var name="mySessionID"	expr="session.values.mySessionID"/>
 	<var name="flashPhone" expr="session.values.flashPhone"/> <!-- Flash Gordon goes here -->
+<!--
+sip:9991451417!sbc-external.orl.voxeo.net@sbc-internal	Orlando
+sip:9991451417!sbc-external.atl.voxeo.net@sbc-internal	Atlanta
+sip:9991451417!sbc-external.las.voxeo.net@sbc-internal	Vegas
 
+sip:9991451421!sbc-external.fra.voxeo.net@sbc-internal	Frankfurt
+sip:9991451418!sbc-external.lon.voxeo.net@sbc-internal	London
+-->
 	<script>
 		var Hints = new Object();
 		Hints.headers = new Object();
 
 			function setCookies(phoneNumber,playerName,mySessionID){
-				Hints.headers['x-vdirect'] = 1;
+				Hints.headers['x-vdirect'] = '1';
 				Hints.headers['x-mysessionid'] = mySessionID;
 				Hints.headers['x-playerName'] = playerName;
 				Hints.headers['x-phoneNumber'] = phoneNumber;
@@ -63,10 +70,8 @@
 					<assign name="state0" expr="'in_vegas'"/>
 					<!-- Call Vegas -->
 					<script>setCity('vegas');</script>
-					<!--	<createcall dest="'sip:9991426400@sip-noproxy.voxeo.net'" callerid="'1112223333'" hints="Hints" connectionid="outboundConnID"/> --> <!-- get headers -->
-					<!--	<createcall dest="'sip:9991451419!sbc-external.orl.voxeo.net@sbc-staging-internal'" callerid="'1112223333'" hints="Hints" connectionid="outboundConnID"/> --><!-- VXML version-->
-  			
-					<createcall dest="'sip:9991451423@sip-noproxy.voxeo.net'" callerid="'1112223333'" hints="Hints" connectionid="outboundConnID"/>
+						<createcall dest="'sip:9991451417!sbc-external.las.voxeo.net@sbc-internal'" callerid="'4074181800'" hints="Hints" connectionid="outboundConnID"/>
+					<!-- <createcall dest="'sip:9991451423@sip-noproxy.voxeo.net'" callerid="'1112223333'" hints="Hints" connectionid="outboundConnID"/> -->
 				</transition>
 				<transition event="connection.connected" state="in_vegas">
 					<join id1="confid" id2="outboundConnID"/>
@@ -87,12 +92,12 @@
 						<log expr="'@@@@[DISCONNECT ELSE] ' "/>
 						</if>
 				</transition>
-					
+				<!-- Call Atlanta -->
 				<transition event="user.call_atlanta" state="call_atlanta">
 					<log expr="'@@@@[Call Atlanta]'"/>
 					<assign name="state0" expr="'in_atlanta'"/>
 					<script>setCity('atlanta');</script>
-					<createcall dest="'sip:9991451423@sip-noproxy.voxeo.net'" callerid="'1112223333'" hints="Hints" connectionid="outboundConnID"/>
+						<createcall dest="'sip:9991451417!sbc-external.atl.voxeo.net@sbc-internal'" callerid="'4074181800'" hints="Hints" connectionid="outboundConnID"/>
 				</transition>
 					
 				<transition event="connection.connected" state="in_atlanta">
@@ -115,13 +120,13 @@
 					</if>
 				</transition>
 			
-					<!--	Calling Orlando	-->
+					<!--	Call Orlando	-->
 			
 				<transition event="user.call_orlando" state="call_orlando">
 					<log expr="'@@@@[Call Orlando]'"/>
 					<assign name="state0" expr="'in_orlando'"/>
 					<script>setCity('orlando');</script>
-					<createcall dest="'sip:9991451423@sip-noproxy.voxeo.net'" callerid="'1112223333'" hints="Hints" connectionid="outboundConnID"/>
+					<createcall dest="'sip:9991451417!sbc-external.orl.voxeo.net@sbc-internal'" callerid="'4074181800'" hints="Hints" connectionid="outboundConnID"/>
 				</transition>
 			
 				<!-- Orlando Connected -->
@@ -146,11 +151,12 @@
 					</if>
 				</transition>
 
+				<!-- Call London -->
 				<transition event="user.call_london" state="call_london">
 					<log expr="'@@@@[Call London]'"/>
 					<assign name="state0" expr="'in_london'"/>
 					<script>setCity('london');</script>
-					<createcall dest="'sip:9991451423@sip-noproxy.voxeo.net'" callerid="'1112223333'" hints="Hints" connectionid="outboundConnID"/>
+					<createcall dest="'sip:9991451418!sbc-external.lon.voxeo.net@sbc-internal'" callerid="'4074181800'" hints="Hints" connectionid="outboundConnID"/>
 				</transition>
 
 				<transition event="connection.connected" state="in_london">
@@ -172,11 +178,12 @@
 					</if>
 				</transition>
 
+				<!-- Call Frankfurt -->
 				<transition event="user.call_frankfurt" state="call_frankfurt">
 					<log expr="'@@@@[Call Frankfurt]'"/>
 						<assign name="state0" expr="'in_frankfurt'"/>
 						<script>setCity('frankfurt');</script>
-					<createcall dest="'sip:9991451423@sip-noproxy.voxeo.net'" callerid="'1112223333'" hints="Hints" connectionid="outboundConnID"/>
+					<createcall dest="'sip:9991451421!sbc-external.fra.voxeo.net@sbc-internal'" callerid="'4074181800'" hints="Hints" connectionid="outboundConnID"/>
 				</transition>
 
 				<transition event="connection.connected" state="in_frankfurt">
@@ -189,9 +196,8 @@
 				<transition event="connection.disconnected" state="in_frankfurt">
 					<log expr="'@@@@ The connectionid is: [' + event$.connectionid + ']'"/>
 					<if cond="event$.connectionid == outboundConnID">
-						<assign name="state0" expr="'call_bejing'"/>
-						<script>setCity('beijing');</script>
-							<send name="'user.call_bejing'" targettype="'ccxml'" target="session.id"/>
+						<assign name="state0" expr="'call_beijing'"/>
+							<send name="'user.call_beijing'" targettype="'ccxml'" target="session.id"/>
 							<elseif cond="event$.connectionid == playerConnID"/>
 							<log expr="'@@@@[ PLAYER HUNG UP] ' "/>
 							<send name="'user.player_hungup'" targettype="'ccxml'" target="session.id"/>
@@ -200,23 +206,30 @@
 					</if>
 				</transition>
 
-				<transition event="user.call_bejing" state="call_bejing">
-					<log expr="'@@@@[Call Bejing]'"/>
-					<assign name="state0" expr="'in_bejing'"/>
-					<createcall dest="'sip:9991451423@sip-noproxy.voxeo.net'" callerid="'1112223333'" hints="Hints" connectionid="outboundConnID"/>
+				<!-- Call Beijing -->
+				<transition event="user.call_beijing" state="call_beijing">
+					<log expr="'@@@@[Call beijing]'"/>
+					<assign name="state0" expr="'in_beijing'"/>
+					<script>setCity('beijing');</script>
+					<createcall dest="'sip:9991451417!sbc-external.orl.voxeo.net@sbc-internal'" callerid="'4074181800'" hints="Hints" connectionid="outboundConnID"/>
 				</transition>
 
-				<transition event="connection.connected" state="in_bejing">
+				<transition event="connection.connected" state="in_beijing">
 					<join id1="confid" id2="outboundConnID"/>
-					<log expr="'@@@@[Call is in Bejing]'"/>
+					<log expr="'@@@@[Call is in beijing]'"/>
 				</transition>
 
 				<!-- Bridge the caller into game -->
 
-				<transition event="connection.disconnected" state="in_bejing">
+				<transition event="connection.disconnected" state="in_beijing">
 					<log expr="'@@@@ The connectionid is: [' + event$.connectionid + ']'"/>
 						<if cond="event$.connectionid == outboundConnID">
+
 							<assign name="state0" expr="'call_player'"/>
+							<var name="location" expr="'hardrock'"/>
+							<var name="action" expr="'update'"/>
+							<send name="'http.get'" target="'http://demos.voxeo.com/roundTheWorld/api/api.php'" namelist="mySessionID location playerName phoneNumber action" targettype="'basichttp'" />
+
 							<send name="'user.call_player'" targettype="'ccxml'" target="session.id"/>
 							<elseif cond="event$.connectionid == playerConnID"/>
 								<log expr="'@@@@[ PLAYER HUNG UP] ' "/>
@@ -227,9 +240,10 @@
 				</transition>
 
 				<transition event="user.call_player" state="call_player">
-					<log expr="'@@@@[Call Player]'"/>
+					<log expr="'@@@@[Calling Player]'"/>
+					<log expr="'@@@@[Phone Number] ' + phoneNumber"/>
 					<assign name="state0" expr="'call_player'"/>
-					<createcall dest="'tel:+1'+phoneNumber " callerid="callerID" hints="Hints" connectionid="outboundConnID"/>
+					<createcall dest="'tel:+1'+phoneNumber" callerid="callerID" hints="Hints" connectionid="outboundConnID"/>
 				</transition>
 
 				<transition event="connection.connected" state="call_player">
